@@ -12,8 +12,6 @@ public class LottoPrize {
             5, 5_000
     );
 
-
-
     public static int getPrize(int matchCount, boolean bonusMatched) {
         int rank = getRank(matchCount, bonusMatched);
         return PRIZE_MAP.getOrDefault(rank, 0);

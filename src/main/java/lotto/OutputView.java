@@ -7,8 +7,9 @@ public class OutputView {
 
     private static final String PURCHASE_MESSAGE_FORMAT = "%d개를 구매했습니다.%n";
     private static final String PURCHASE_NUMBERS_MESSAGE_FORMAT = "[%s]%n";
-    private static final String RESULT_FORMAT = "%d개 일치 (%s원) - %d개%n";
-    private static final String RESULT_FORMAT2 = "%d개 일치, 보너스 볼 일치 (%s원) - %d개%n";
+    private static final String MATCH_RESULT_MESSAGE_FORMAT = "%d개 일치%s (%,d원) - %d개%n";
+    private static final String MATCH_BONUS_MESSAGE = ", 보너스 볼 일치";
+    private static final String NOT_MATCH_BONUS_MESSAGE = "";
 
     public void printLottos(List<Lotto> lottos) {
         System.out.printf(PURCHASE_MESSAGE_FORMAT, lottos.size());
@@ -22,21 +23,19 @@ public class OutputView {
         System.out.printf(PURCHASE_MESSAGE_FORMAT, lottoNumbers);
     }
 
-    public void printResult(int seedMoney, List<Lotto> lottos) {
+    public void printLottoResult(int seedMoney, List<Lotto> lottos) {
         System.out.println("당첨 통계");
         System.out.println("---");
+
         long totalPrize = 0;
-        System.out.printf(RESULT_FORMAT, 3, "5,000", 1);
-        System.out.printf(RESULT_FORMAT, 4, "50,000", 1);
-        System.out.printf(RESULT_FORMAT, 5, "1,500,000", 1);
-        System.out.printf(RESULT_FORMAT2, 5, "30,000,000", 1);
-        System.out.printf(RESULT_FORMAT, 6, "2,000,000,000", 1);
+
+        for(LottoRank lottoRank : LottoRank.values()) {
+            if(lottoRank.isRequiresBonus()) {
+                System.out.printf(MATCH_RESULT_MESSAGE_FORMAT, lottoRank.getMatchCount(), MATCH_BONUS_MESSAGE, lottoRank.getPrize(), -1);
+                continue;
+            }
+            System.out.printf(MATCH_RESULT_MESSAGE_FORMAT, lottoRank.getMatchCount(), NOT_MATCH_BONUS_MESSAGE, lottoRank.getPrize(), -1);
+        }
         System.out.println("총 수익률은 입니다.");
-    }
-
-
-
-    public void temp(int matchCount, boolean bonusMatched) {
-
     }
 }
