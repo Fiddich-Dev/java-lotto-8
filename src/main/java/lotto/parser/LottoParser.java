@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LottoParser {
-    private static final int UNIT = 1000;
 
     public int parsePurchaseAmount(String input) {
         try {
