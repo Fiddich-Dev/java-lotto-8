@@ -7,6 +7,7 @@ import lotto.parser.LottoParser;
 import lotto.view.InputView;
 import lotto.view.OutputView;
 
+import java.math.BigInteger;
 import java.util.List;
 
 public class LottoController {
@@ -22,7 +23,7 @@ public class LottoController {
     }
 
     public void run() {
-        int amount = lottoParser.parsePurchaseAmount(inputView.requestPurchaseAmount());
+        BigInteger amount = lottoParser.parsePurchaseAmount(inputView.requestPurchaseAmount());
         LottoStore lottoStore = new LottoStore();
         List<Lotto> lottos = lottoStore.buy(amount);
         outputView.printLottos(lottos);
