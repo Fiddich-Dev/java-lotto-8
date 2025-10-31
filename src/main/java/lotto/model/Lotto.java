@@ -1,4 +1,4 @@
-package lotto;
+package lotto.model;
 
 import java.util.Collections;
 import java.util.List;
@@ -7,8 +7,8 @@ public class Lotto {
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
+        this.numbers = List.copyOf(numbers);
         validate(numbers);
-        this.numbers = numbers;
     }
 
     private void validate(List<Integer> numbers) {
@@ -19,6 +19,6 @@ public class Lotto {
 
     // TODO: 추가 기능 구현
     public List<Integer> getLottoNumbers() {
-        return Collections.unmodifiableList(numbers);
+        return numbers;
     }
 }
