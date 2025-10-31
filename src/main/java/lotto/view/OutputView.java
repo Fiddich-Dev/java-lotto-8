@@ -22,7 +22,7 @@ public class OutputView {
     }
 
     public void printLotto(Lotto lotto) {
-        String lottoNumbers = lotto.getLottoNumbers().stream().map(String::valueOf).collect(Collectors.joining(", "));
+        String lottoNumbers = lotto.getNumbers().stream().map(String::valueOf).collect(Collectors.joining(", "));
         System.out.printf(PURCHASE_MESSAGE_FORMAT, lottoNumbers);
     }
 

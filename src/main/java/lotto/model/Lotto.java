@@ -1,5 +1,6 @@
 package lotto.model;
 
+import java.util.HashSet;
 import java.util.List;
 
 public class Lotto {
@@ -14,9 +15,12 @@ public class Lotto {
         if (numbers.size() != 6) {
             throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
         }
+        if(numbers.size() != new HashSet<>(numbers).size()) {
+            throw new IllegalArgumentException("[ERROR] 당첨 번호는 중복이 없어야 합니다.");
+        }
     }
 
-    public List<Integer> getLottoNumbers() {
+    public List<Integer> getNumbers() {
         return numbers;
     }
 }

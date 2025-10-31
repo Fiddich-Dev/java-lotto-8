@@ -18,13 +18,13 @@ public class LottoResultChecker {
 
     public LottoRank calculateRank() {
         int matchCount = getMatchedNumbersCount();
-        boolean bonusMatch = lotto.getLottoNumbers().contains(winningLotto.getBonusNumber());
+        boolean bonusMatch = lotto.getNumbers().contains(winningLotto.getBonusNumber());
         return LottoRank.of(matchCount, bonusMatch);
     }
 
     private int getMatchedNumbersCount() {
         List<Integer> winningLottoNumbers = winningLotto.getNumbers();
-        List<Integer> lottoNumbers = lotto.getLottoNumbers();
+        List<Integer> lottoNumbers = lotto.getNumbers();
 
         int count = 0;
         for(Integer lottoNumber : lottoNumbers) {
@@ -40,7 +40,7 @@ public class LottoResultChecker {
 
     private boolean isMatchBonusNumber() {
         Integer bonusNumber = winningLotto.getBonusNumber();
-        List<Integer> lottoNumbers = lotto.getLottoNumbers();
+        List<Integer> lottoNumbers = lotto.getNumbers();
 
         for(Integer lottoNumber : lottoNumbers) {
             if(lottoNumber.equals(bonusNumber)) {
