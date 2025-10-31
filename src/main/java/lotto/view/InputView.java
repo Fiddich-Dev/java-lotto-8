@@ -9,16 +9,22 @@ public class InputView {
 
     public String requestPurchaseAmount() {
         System.out.println(PURCHASE_AMOUNT_MESSAGE);
-        return Console.readLine();
+        String input = Console.readLine();
+        System.out.println();
+        return input;
     }
 
     public String requestWinningNumbers() {
         System.out.println(WINNING_NUMBERS_MESSAGE);
-        return Console.readLine();
+        String input = Console.readLine();
+        System.out.println();
+        return input;
     }
 
     public String requestBonusNumber() {
         System.out.println(BONUS_NUMBER_MESSAGE);
-        return Console.readLine();
+        String input = Console.readLine();
+        System.out.println();
+        return input;
     }
 }

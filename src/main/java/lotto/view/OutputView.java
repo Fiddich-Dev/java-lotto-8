@@ -1,9 +1,13 @@
 package lotto.view;
 
+import lotto.LottoResultChecker;
 import lotto.model.Lotto;
 import lotto.model.LottoRank;
+import lotto.model.WinningLotto;
 
+import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -19,26 +23,32 @@ public class OutputView {
         for (Lotto lotto : lottos) {
             printLotto(lotto);
         }
+        System.out.println();
     }
 
     public void printLotto(Lotto lotto) {
         String lottoNumbers = lotto.getNumbers().stream().map(String::valueOf).collect(Collectors.joining(", "));
-        System.out.printf(PURCHASE_MESSAGE_FORMAT, lottoNumbers);
+        System.out.printf(PURCHASE_NUMBERS_MESSAGE_FORMAT, lottoNumbers);
     }
 
-    public void printLottoResult(int seedMoney, List<Lotto> lottos) {
+    public void printLottoResult(BigInteger amount, List<Lotto> lottos, WinningLotto winningLotto) {
         System.out.println("당첨 통계");
         System.out.println("---");
+
+        LottoResultChecker lottoResultChecker2 = new LottoResultChecker(lottos, winningLotto);
+        Map<LottoRank, Integer> result = lottoResultChecker2.check();
 
         long totalPrize = 0;
 
         for(LottoRank lottoRank : LottoRank.values()) {
             if(lottoRank.isRequiresBonus()) {
-                System.out.printf(MATCH_RESULT_MESSAGE_FORMAT, lottoRank.getMatchCount(), MATCH_BONUS_MESSAGE, lottoRank.getPrize(), -1);
+                System.out.printf(MATCH_RESULT_MESSAGE_FORMAT, lottoRank.getMatchCount(), MATCH_BONUS_MESSAGE, lottoRank.getPrize(), result.get(lottoRank));
+                totalPrize += (long) result.get(lottoRank) * lottoRank.getPrize();
                 continue;
             }
-            System.out.printf(MATCH_RESULT_MESSAGE_FORMAT, lottoRank.getMatchCount(), NOT_MATCH_BONUS_MESSAGE, lottoRank.getPrize(), -1);
+            System.out.printf(MATCH_RESULT_MESSAGE_FORMAT, lottoRank.getMatchCount(), NOT_MATCH_BONUS_MESSAGE, lottoRank.getPrize(), result.get(lottoRank));
+            totalPrize += (long) result.get(lottoRank) * lottoRank.getPrize();
         }
-        System.out.println("총 수익률은 입니다.");
+        System.out.println("총 수익률은 입니다." + totalPrize);
     }
 }

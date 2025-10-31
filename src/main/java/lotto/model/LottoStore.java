@@ -19,7 +19,9 @@ public class LottoStore {
         BigInteger i = BigInteger.ZERO;
         while (i.compareTo(count) < 0) {
             List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
+            Collections.sort(numbers);
             lottos.add(new Lotto(numbers));
+            i = i.add(BigInteger.ONE);
         }
         return lottos;
     }
