@@ -33,7 +33,7 @@ public class InputView {
     }
 
     private void validate(String input) {
-        if(input == null || input.isBlank()) {
+        if (input == null || input.isBlank()) {
             throw new IllegalArgumentException(ERROR_EMPTY_INPUT);
         }
     }

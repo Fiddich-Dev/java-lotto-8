@@ -17,10 +17,10 @@ public class WinningLotto extends Lotto {
     }
 
     private void validateBonusNumber(Integer bonusNumber) {
-        if(getNumbers().contains(bonusNumber)) {
+        if (getNumbers().contains(bonusNumber)) {
             throw new IllegalArgumentException(ERROR_DUPLICATE_NUMBER);
         }
-        if(bonusNumber < 1 || bonusNumber > 45) {
+        if (bonusNumber < 1 || bonusNumber > 45) {
             throw new IllegalArgumentException(ERROR_OUT_OF_RANGE);
         }
     }

@@ -1,6 +1,6 @@
 package lotto.view;
 
-import lotto.LottoResult;
+import lotto.model.LottoResult;
 import lotto.model.Lotto;
 import lotto.model.LottoRank;
 import lotto.model.WinningLotto;
@@ -19,8 +19,8 @@ public class OutputView {
     private static final String MATCH_RESULT_MESSAGE_FORMAT = "%d개 일치%s (%,d원) - %d개%n";
     private static final String MATCH_BONUS_MESSAGE = ", 보너스 볼 일치";
     private static final String NOT_MATCH_BONUS_MESSAGE = "";
-    private static final int PRECISION = 1;
     private static final String PROFIT_RATE_MESSAGE_FORMAT = "총 수익률은 %s%%입니다.%n";
+    private static final int PRECISION = 1;
 
     public void printPurchasedLottos(List<Lotto> lottos) {
         System.out.printf(PURCHASE_MESSAGE_FORMAT, lottos.size());
@@ -38,12 +38,16 @@ public class OutputView {
 
     public void printLottoResult(BigInteger amount, List<Lotto> lottos, WinningLotto winningLotto) {
         System.out.println(RESULT_MESSAGE);
+        printWinningCounts(lottos, winningLotto);
+        printProfitRate(amount, lottos, winningLotto);
+    }
 
+    private void printWinningCounts(List<Lotto> lottos, WinningLotto winningLotto) {
         Map<LottoRank, Integer> lottoResult = LottoResult.of(lottos, winningLotto);
 
         for (LottoRank lottoRank : LottoRank.validRanks(LottoRank.BY_PRIZE_ASC)) {
             String bonusMessage = NOT_MATCH_BONUS_MESSAGE;
-            if(lottoRank.isRequiresBonus()) {
+            if (lottoRank.isRequiresBonus()) {
                 bonusMessage = MATCH_BONUS_MESSAGE;
             }
             System.out.printf(MATCH_RESULT_MESSAGE_FORMAT,
@@ -52,7 +56,6 @@ public class OutputView {
                     lottoRank.getPrize(),
                     lottoResult.get(lottoRank));
         }
-        printProfitRate(amount, lottos, winningLotto);
     }
 
     private void printProfitRate(BigInteger amount, List<Lotto> lottos, WinningLotto winningLotto) {
@@ -62,7 +65,7 @@ public class OutputView {
         BigDecimal amountDecimal = new BigDecimal(amount);
 
         BigDecimal profitRate = totalPrizeDecimal
-                .divide(amountDecimal, PRECISION+1, RoundingMode.HALF_UP) // 소수점 둘째자리까지 반올림
+                .divide(amountDecimal, PRECISION + 1, RoundingMode.HALF_UP) // 소수점 둘째자리까지 반올림
                 .multiply(BigDecimal.valueOf(100));
 
         String numberFormat = "%." + PRECISION + "f";

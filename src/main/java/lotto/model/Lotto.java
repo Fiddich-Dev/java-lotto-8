@@ -22,10 +22,10 @@ public class Lotto {
         if (numbers.size() != 6) {
             throw new IllegalArgumentException(ERROR_INVALID_SIZE);
         }
-        if(numbers.size() != new HashSet<>(numbers).size()) {
+        if (numbers.size() != new HashSet<>(numbers).size()) {
             throw new IllegalArgumentException(ERROR_DUPLICATE_NUMBER);
         }
-        if(numbers.stream().anyMatch(n -> n < 1 || n > 45)) {
+        if (numbers.stream().anyMatch(n -> n < 1 || n > 45)) {
             throw new IllegalArgumentException(ERROR_OUT_OF_RANGE);
         }
     }
