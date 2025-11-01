@@ -40,7 +40,7 @@ public class OutputView {
 
         long totalPrize = 0;
 
-        for(LottoRank lottoRank : LottoRank.values()) {
+        for(LottoRank lottoRank : LottoRank.validRanks(LottoRank.BY_PRIZE_ASC)) {
             if(lottoRank.isRequiresBonus()) {
                 System.out.printf(MATCH_RESULT_MESSAGE_FORMAT, lottoRank.getMatchCount(), MATCH_BONUS_MESSAGE, lottoRank.getPrize(), result.get(lottoRank));
                 totalPrize += (long) result.get(lottoRank) * lottoRank.getPrize();

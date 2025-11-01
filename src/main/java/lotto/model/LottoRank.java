@@ -1,5 +1,8 @@
 package lotto.model;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public enum LottoRank {
     FIRST(6, false, 2_000_000_000),
     SECOND(5, true, 30_000_000),
@@ -32,6 +35,23 @@ public enum LottoRank {
         return NONE;
     }
 
+    public static LottoRank[] validRanks() {
+        return validRanks(BY_PRIZE_DESC);
+    }
+
+    public static LottoRank[] validRanks(Comparator<LottoRank> comparator) {
+        return Arrays.stream(values())
+                .filter(rank -> rank != NONE)
+                .sorted(comparator)
+                .toArray(LottoRank[]::new);
+    }
+
+    public static final Comparator<LottoRank> BY_PRIZE_ASC =
+            Comparator.comparingInt(LottoRank::getPrize);
+
+    public static final Comparator<LottoRank> BY_PRIZE_DESC =
+            Comparator.comparingInt(LottoRank::getPrize).reversed();
+
     public int getMatchCount() {
         return matchCount;
     }
@@ -43,4 +63,5 @@ public enum LottoRank {
     public int getPrize() {
         return prize;
     }
+
 }
