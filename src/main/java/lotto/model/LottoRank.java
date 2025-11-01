@@ -2,6 +2,7 @@ package lotto.model;
 
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.List;
 
 public enum LottoRank {
     FIRST(6, false, 2_000_000_000),
@@ -10,6 +11,11 @@ public enum LottoRank {
     FOURTH(4, false, 50_000),
     FIFTH(3, false, 5_000),
     NONE(-1, false, 0);
+
+    public static final Comparator<LottoRank> BY_PRIZE_ASC =
+            Comparator.comparingLong(LottoRank::getPrize);
+    public static final Comparator<LottoRank> BY_PRIZE_DESC =
+            Comparator.comparingLong(LottoRank::getPrize).reversed();
 
     private final int matchCount;
     private final boolean requiresBonus;
@@ -35,22 +41,18 @@ public enum LottoRank {
         return NONE;
     }
 
-    public static LottoRank[] validRanks() {
+    public static List<LottoRank> validRanks() {
         return validRanks(BY_PRIZE_DESC);
     }
 
-    public static LottoRank[] validRanks(Comparator<LottoRank> comparator) {
-        return Arrays.stream(values())
-                .filter(rank -> rank != NONE)
-                .sorted(comparator)
-                .toArray(LottoRank[]::new);
+    public static List<LottoRank> validRanks(Comparator<LottoRank> comparator) {
+        return List.copyOf(
+                Arrays.stream(values())
+                        .filter(rank -> rank != NONE)
+                        .sorted(comparator)
+                        .toList()
+        );
     }
-
-    public static final Comparator<LottoRank> BY_PRIZE_ASC =
-            Comparator.comparingLong(LottoRank::getPrize);
-
-    public static final Comparator<LottoRank> BY_PRIZE_DESC =
-            Comparator.comparingLong(LottoRank::getPrize).reversed();
 
     public int getMatchCount() {
         return matchCount;

@@ -4,6 +4,17 @@ import java.util.HashSet;
 import java.util.List;
 
 public class Lotto {
+    private static final int LOTTO_NUMBER_COUNT = 6;
+    private static final int MIN_NUMBER = 1;
+    private static final int MAX_NUMBER = 45;
+
+    private static final String ERROR_INVALID_SIZE =
+            String.format("[ERROR] 로또 번호는 %d개여야 합니다.", LOTTO_NUMBER_COUNT);
+    private static final String ERROR_DUPLICATE_NUMBER =
+            "[ERROR] 로또 번호는 중복이 없어야 합니다.";
+    private static final String ERROR_OUT_OF_RANGE =
+            String.format("[ERROR] 로또 번호는 %d부터 %d 사이의 숫자여야 합니다.", MIN_NUMBER, MAX_NUMBER);
+
     private final List<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
@@ -13,13 +24,13 @@ public class Lotto {
 
     private void validate(List<Integer> numbers) {
         if (numbers.size() != 6) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
+            throw new IllegalArgumentException(ERROR_INVALID_SIZE);
         }
         if(numbers.size() != new HashSet<>(numbers).size()) {
-            throw new IllegalArgumentException("[ERROR] 당첨 번호는 중복이 없어야 합니다.");
+            throw new IllegalArgumentException(ERROR_DUPLICATE_NUMBER);
         }
         if(numbers.stream().anyMatch(n -> n < 1 || n > 45)) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 1부터 45 사이의 숫자여야 합니다.");
+            throw new IllegalArgumentException(ERROR_OUT_OF_RANGE);
         }
     }
 
