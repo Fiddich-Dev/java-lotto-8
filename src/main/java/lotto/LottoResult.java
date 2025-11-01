@@ -4,6 +4,7 @@ import lotto.model.Lotto;
 import lotto.model.LottoRank;
 import lotto.model.WinningLotto;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,17 @@ public class LottoResult {
             result.put(calculateRank(lotto, winningLotto), result.get(calculateRank(lotto, winningLotto)) + 1);
         }
         return result;
+    }
+
+    public static BigInteger calculateTotalPrize(List<Lotto> lottos, WinningLotto winningLotto) {
+        BigInteger totalPrize = BigInteger.ZERO;
+        Map<LottoRank, Integer> result = of(lottos, winningLotto);
+        for(LottoRank lottoRank : LottoRank.validRanks()) {
+            totalPrize = totalPrize.add(
+                    BigInteger.valueOf(lottoRank.getPrize())
+                            .multiply(BigInteger.valueOf(result.get(lottoRank))));
+        }
+        return totalPrize;
     }
 
     private static LottoRank calculateRank(Lotto lotto, WinningLotto winningLotto) {

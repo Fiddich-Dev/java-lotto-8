@@ -5,7 +5,9 @@ import lotto.model.Lotto;
 import lotto.model.LottoRank;
 import lotto.model.WinningLotto;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,12 +19,12 @@ public class OutputView {
     private static final String MATCH_RESULT_MESSAGE_FORMAT = "%d개 일치%s (%,d원) - %d개%n";
     private static final String MATCH_BONUS_MESSAGE = ", 보너스 볼 일치";
     private static final String NOT_MATCH_BONUS_MESSAGE = "";
+    private static final int PRECISION = 1;
+    private static final String PROFIT_RATE_MESSAGE_FORMAT = "총 수익률은 %s%%입니다.%n";
 
     public void printPurchasedLottos(List<Lotto> lottos) {
         System.out.printf(PURCHASE_MESSAGE_FORMAT, lottos.size());
-        for (Lotto lotto : lottos) {
-            printSingleLotto(lotto);
-        }
+        lottos.forEach(this::printSingleLotto);
         System.out.println();
     }
 
@@ -39,17 +41,33 @@ public class OutputView {
 
         Map<LottoRank, Integer> lottoResult = LottoResult.of(lottos, winningLotto);
 
-        long totalPrize = 0;
-
         for (LottoRank lottoRank : LottoRank.validRanks(LottoRank.BY_PRIZE_ASC)) {
-            if (lottoRank.isRequiresBonus()) {
-                System.out.printf(MATCH_RESULT_MESSAGE_FORMAT, lottoRank.getMatchCount(), MATCH_BONUS_MESSAGE, lottoRank.getPrize(), lottoResult.get(lottoRank));
-                totalPrize += (long) lottoResult.get(lottoRank) * lottoRank.getPrize();
-                continue;
+            String bonusMessage = NOT_MATCH_BONUS_MESSAGE;
+            if(lottoRank.isRequiresBonus()) {
+                bonusMessage = MATCH_BONUS_MESSAGE;
             }
-            System.out.printf(MATCH_RESULT_MESSAGE_FORMAT, lottoRank.getMatchCount(), NOT_MATCH_BONUS_MESSAGE, lottoRank.getPrize(), lottoResult.get(lottoRank));
-            totalPrize += (long) lottoResult.get(lottoRank) * lottoRank.getPrize();
+            System.out.printf(MATCH_RESULT_MESSAGE_FORMAT,
+                    lottoRank.getMatchCount(),
+                    bonusMessage,
+                    lottoRank.getPrize(),
+                    lottoResult.get(lottoRank));
         }
-        System.out.println("총 수익률은 입니다." + totalPrize);
+        printProfitRate(amount, lottos, winningLotto);
+    }
+
+    private void printProfitRate(BigInteger amount, List<Lotto> lottos, WinningLotto winningLotto) {
+        BigInteger totalPrize = LottoResult.calculateTotalPrize(lottos, winningLotto);
+
+        BigDecimal totalPrizeDecimal = new BigDecimal(totalPrize);
+        BigDecimal amountDecimal = new BigDecimal(amount);
+
+        BigDecimal profitRate = totalPrizeDecimal
+                .divide(amountDecimal, PRECISION+1, RoundingMode.HALF_UP) // 소수점 둘째자리까지 반올림
+                .multiply(BigDecimal.valueOf(100));
+
+        String numberFormat = "%." + PRECISION + "f";
+        String formattedRate = String.format(numberFormat, profitRate.doubleValue());
+
+        System.out.printf(PROFIT_RATE_MESSAGE_FORMAT, formattedRate);
     }
 }
