@@ -13,9 +13,9 @@ public enum LottoRank {
 
     private final int matchCount;
     private final boolean requiresBonus;
-    private final int prize;
+    private final long prize;
 
-    LottoRank(int matchCount, boolean requiresBonus, int prize) {
+    LottoRank(int matchCount, boolean requiresBonus, long prize) {
         this.matchCount = matchCount;
         this.requiresBonus = requiresBonus;
         this.prize = prize;
@@ -47,10 +47,10 @@ public enum LottoRank {
     }
 
     public static final Comparator<LottoRank> BY_PRIZE_ASC =
-            Comparator.comparingInt(LottoRank::getPrize);
+            Comparator.comparingLong(LottoRank::getPrize);
 
     public static final Comparator<LottoRank> BY_PRIZE_DESC =
-            Comparator.comparingInt(LottoRank::getPrize).reversed();
+            Comparator.comparingLong(LottoRank::getPrize).reversed();
 
     public int getMatchCount() {
         return matchCount;
@@ -60,8 +60,7 @@ public enum LottoRank {
         return requiresBonus;
     }
 
-    public int getPrize() {
+    public long getPrize() {
         return prize;
     }
-
 }
