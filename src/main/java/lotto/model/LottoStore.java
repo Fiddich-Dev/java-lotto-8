@@ -10,7 +10,7 @@ public class LottoStore {
 
     private final static BigInteger PRICE = BigInteger.valueOf(1000);
 
-    public List<Lotto> buy(BigInteger amount) {
+    public static List<Lotto> buy(BigInteger amount) {
         validatePurchaseAmount(amount);
         BigInteger count = amount.divide(PRICE);
 
@@ -24,7 +24,7 @@ public class LottoStore {
         return lottos;
     }
 
-    private void validatePurchaseAmount(BigInteger amount) {
+    private static void validatePurchaseAmount(BigInteger amount) {
         if (amount.compareTo(BigInteger.ZERO) <= 0) {
             throw new IllegalArgumentException(ERROR_AMOUNT_NOT_POSITIVE);
         }
