@@ -26,7 +26,7 @@ public class LottoController {
         BigInteger amount = lottoParser.parsePurchaseAmount(inputView.requestPurchaseAmount());
         LottoStore lottoStore = new LottoStore();
         List<Lotto> lottos = lottoStore.buy(amount);
-        outputView.printLottos(lottos);
+        outputView.printPurchasedLottos(lottos);
 
         List<Integer> winningLottoNumbers = lottoParser.parseWinningLottoNumbers(inputView.requestWinningNumbers());
         Integer bonusNumber = lottoParser.parseBonusNumber(inputView.requestBonusNumber());
