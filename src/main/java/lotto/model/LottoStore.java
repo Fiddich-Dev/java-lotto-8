@@ -1,10 +1,7 @@
 package lotto.model;
 
-import camp.nextstep.edu.missionutils.Randoms;
-
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class LottoStore {
@@ -18,9 +15,7 @@ public class LottoStore {
 
         BigInteger i = BigInteger.ZERO;
         while (i.compareTo(count) < 0) {
-            List<Integer> numbers = Randoms.pickUniqueNumbersInRange(1, 45, 6);
-            Collections.sort(numbers);
-            lottos.add(new Lotto(numbers));
+            lottos.add(LottoGenerator.generate());
             i = i.add(BigInteger.ONE);
         }
         return lottos;
