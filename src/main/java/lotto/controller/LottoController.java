@@ -11,7 +11,6 @@ import java.math.BigInteger;
 import java.util.List;
 
 public class LottoController {
-
     private final InputView inputView;
     private final LottoParser lottoParser;
     private final OutputView outputView;
@@ -24,8 +23,10 @@ public class LottoController {
 
     public void run() {
         BigInteger amount = lottoParser.parsePurchaseAmount(inputView.requestPurchaseAmount());
+
         LottoStore lottoStore = new LottoStore();
         List<Lotto> lottos = lottoStore.buy(amount);
+
         outputView.printPurchasedLottos(lottos);
 
         List<Integer> winningLottoNumbers = lottoParser.parseWinningLottoNumbers(inputView.requestWinningNumbers());
