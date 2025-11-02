@@ -23,8 +23,12 @@ public class LottoController {
     }
 
     public void run() {
-        PurchaseResult purchaseResult = purchaseLottos();
-        checkWinningResult(purchaseResult.amount(), purchaseResult.lottos());
+        try {
+            PurchaseResult purchaseResult = purchaseLottos();
+            checkWinningResult(purchaseResult.amount(), purchaseResult.lottos());
+        } finally {
+            inputView.close();
+        }
     }
 
     private PurchaseResult purchaseLottos() {

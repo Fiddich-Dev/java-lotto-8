@@ -27,4 +27,8 @@ public class InputView {
         System.out.println();
         return input;
     }
+
+    public void close() {
+        Console.close();
+    }
 }
