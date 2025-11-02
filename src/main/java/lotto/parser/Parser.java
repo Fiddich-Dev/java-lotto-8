@@ -5,12 +5,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Parser {
+    private static final String ERROR_EMPTY_INPUT = "[ERROR] 입력값은 비어있을 수 없습니다.";
     private static final String ERROR_NOT_NUMERIC_AMOUNT = "[ERROR] 금액은 숫자만 입력해야 합니다.";
     private static final String ERROR_NON_NUMERIC_LIST = "[ERROR] 당첨 번호는 숫자여야 합니다.";
     private static final String ERROR_NON_NUMERIC_VALUE = "[ERROR] 보너스 번호는 숫자여야 합니다.";
     private static final String DELIMITER = ",";
 
     public BigInteger parseBigInteger(String input) {
+        validate(input);
         try {
             return new BigInteger(input.trim());
         } catch (NumberFormatException e) {
@@ -19,6 +21,7 @@ public class Parser {
     }
 
     public List<Integer> parseIntegerList(String input) {
+        validate(input);
         try {
             return Arrays.stream(input.trim().split(DELIMITER))
                     .map(String::trim)
@@ -30,10 +33,17 @@ public class Parser {
     }
 
     public Integer parseInteger(String input) {
+        validate(input);
         try {
             return Integer.parseInt(input.trim());
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(ERROR_NON_NUMERIC_VALUE);
+        }
+    }
+
+    private void validate(String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException(ERROR_EMPTY_INPUT);
         }
     }
 }
