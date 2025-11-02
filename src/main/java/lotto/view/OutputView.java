@@ -8,7 +8,6 @@ import lotto.model.WinningLotto;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -69,7 +68,6 @@ public class OutputView {
         BigDecimal profitRate = totalPrizeDecimal
                 .multiply(BigDecimal.valueOf(100))
                 .divide(amountDecimal, PRECISION + 1, RoundingMode.HALF_UP); // 소수점 둘째자리까지 반올림
-
 
         String numberFormat = "%." + PRECISION + "f";
         String formattedRate = String.format(numberFormat, profitRate.doubleValue());
