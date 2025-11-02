@@ -40,7 +40,7 @@ class WinningLottoTest {
     }
 
     @Test
-    @DisplayName("방어적 복사 테스트")
+    @DisplayName("방어적 복사하면 원본 수정해도 주입한 값은 바뀌지 않음")
     void defensiveCopyTest() {
         // given
         List<Integer> numbers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6));
@@ -56,7 +56,7 @@ class WinningLottoTest {
     }
 
     @Test
-    @DisplayName("불변객체 테스트")
+    @DisplayName("불변 리스트 수정시 예외 발생")
     void immutableTest() {
         // given
         List<Integer> numbers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6));

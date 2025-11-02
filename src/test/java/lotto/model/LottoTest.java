@@ -1,11 +1,9 @@
 package lotto.model;
 
-import lotto.controller.dto.PurchaseResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,21 +25,21 @@ class LottoTest {
 
     // TODO: 추가 기능 구현에 따른 테스트 코드 작성
     @Test
-    @DisplayName("로또 번호가 6개보다 적을때")
+    @DisplayName("로또 번호가 6개보다 적을때 예외 발생")
     void lottoNumbersCountTest() {
         Assertions.assertThatThrownBy(() -> new Lotto(List.of(1, 2, 3, 4, 5)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    @DisplayName("로또 번호가 범위를 벗어날때")
+    @DisplayName("로또 번호가 범위를 벗어날때 예외 발생")
     void lottoNumbersTest() {
         Assertions.assertThatThrownBy(() -> new Lotto(List.of(1, 2, 3, 4, 5, 47)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
-    @DisplayName("방어적 복사 테스트")
+    @DisplayName("방어적 복사하면 원본 수정해도 주입한 값은 바뀌지 않음")
     void defensiveCopyTest() {
         // given
         List<Integer> numbers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6));
@@ -56,7 +54,7 @@ class LottoTest {
     }
 
     @Test
-    @DisplayName("불변객체 테스트")
+    @DisplayName("불변 리스트 수정시 예외 발생")
     void immutableTest() {
         // given
         List<Integer> numbers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6));

@@ -1,6 +1,7 @@
 package lotto.controller.dto;
 
 import lotto.model.Lotto;
+import lotto.model.dto.PurchaseResult;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -28,7 +29,7 @@ class PurchaseResultTest {
     }
 
     @Test
-    @DisplayName("방어적 복사 테스트")
+    @DisplayName("방어적 복사하면 원본 수정해도 주입한 값은 바뀌지 않음")
     void defensiveCopyTest() {
         // given
         // (setUp은 자동 실행됨)
@@ -42,7 +43,7 @@ class PurchaseResultTest {
     }
 
     @Test
-    @DisplayName("불변객체 테스트")
+    @DisplayName("불변 리스트 수정시 예외 발생")
     void immutableTest() {
         // given
         // (setUp은 자동 실행됨)

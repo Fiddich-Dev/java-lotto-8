@@ -1,6 +1,6 @@
 package lotto.controller;
 
-import lotto.controller.dto.PurchaseResult;
+import lotto.model.dto.PurchaseResult;
 import lotto.model.Lotto;
 import lotto.model.LottoStore;
 import lotto.model.WinningLotto;
