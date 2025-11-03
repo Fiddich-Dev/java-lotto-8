@@ -12,6 +12,9 @@ import java.math.BigInteger;
 import java.util.List;
 
 public class LottoController {
+    private static final String AMOUNT_RETRY_MESSAGE = "금액 입력 재시도 ";
+    private static final String WINNING_NUMBERS_RETRY_MESSAGE = "당첨번호 입력 재시도 ";
+
     private final InputView inputView;
     private final Parser parser;
     private final OutputView outputView;
@@ -39,7 +42,7 @@ public class LottoController {
                 outputView.printPurchasedLottos(lottos);
                 return new PurchaseResult(amount, lottos);
             } catch (IllegalArgumentException | IllegalStateException e) {
-                System.out.println("금액 입력 재시도 " + e.getMessage());
+                System.out.println(AMOUNT_RETRY_MESSAGE + e.getMessage());
             }
         }
     }
@@ -54,7 +57,7 @@ public class LottoController {
                 outputView.printLottoResult(amount, lottos, winningLotto);
                 return;
             } catch (IllegalArgumentException | IllegalStateException e) {
-                System.out.println("당첨번호 입력 재시도 " + e.getMessage());
+                System.out.println(WINNING_NUMBERS_RETRY_MESSAGE + e.getMessage());
             }
         }
     }

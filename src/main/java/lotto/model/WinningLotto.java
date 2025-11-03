@@ -20,7 +20,7 @@ public class WinningLotto extends Lotto {
         if (getNumbers().contains(bonusNumber)) {
             throw new IllegalArgumentException(ERROR_DUPLICATE_NUMBER);
         }
-        if (bonusNumber < 1 || bonusNumber > 45) {
+        if (bonusNumber < LottoGenerator.MIN_NUMBER || bonusNumber > LottoGenerator.MAX_NUMBER) {
             throw new IllegalArgumentException(ERROR_OUT_OF_RANGE);
         }
     }

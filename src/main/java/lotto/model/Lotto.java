@@ -19,13 +19,13 @@ public class Lotto {
     }
 
     private void validate(List<Integer> numbers) {
-        if (numbers.size() != 6) {
+        if (numbers.size() != LottoGenerator.LOTTO_NUMBER_COUNT) {
             throw new IllegalArgumentException(ERROR_INVALID_SIZE);
         }
         if (numbers.size() != new HashSet<>(numbers).size()) {
             throw new IllegalArgumentException(ERROR_DUPLICATE_NUMBER);
         }
-        if (numbers.stream().anyMatch(n -> n < 1 || n > 45)) {
+        if (numbers.stream().anyMatch(n -> n < LottoGenerator.MIN_NUMBER || n > LottoGenerator.MAX_NUMBER)) {
             throw new IllegalArgumentException(ERROR_OUT_OF_RANGE);
         }
     }
